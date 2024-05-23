@@ -1,0 +1,57 @@
+when:
+
+  - event: push
+
+variables:
+  - &repo "misotolar/freshrss"
+  - &desc "FreshRSS Alpine Linux FPM image"
+  - &auth
+    username:
+      from_secret: DOCKER_USERNAME
+    password:
+      from_secret: DOCKER_PASSWORD
+
+clone:
+
+  - name: clone
+    image: alpine/git
+    pull: true
+    commands:
+      - git init --quiet
+      - git remote add origin ${CI_REPO_CLONE_URL}
+      - git fetch --quiet --depth=1 origin "+refs/heads/${CI_COMMIT_BRANCH}:"
+      - git checkout ${CI_COMMIT_SHA} -b ${CI_COMMIT_BRANCH}
+
+steps:
+
+  - name: version
+    image: mwalbeck/determine-docker-tags
+    pull: true
+    environment:
+      APP_NAME: "FRESHRSS"
+      VERSION_TYPE: "docker_env"
+      INCLUDE_SUFFIX: "no"
+      INCLUDE_MAJOR: "no"
+
+  - name: normalize
+    image: bash
+    pull: true
+    commands:
+      - echo ",${CI_COMMIT_SHA:0:8},latest" >> .tags
+
+  - name: publish
+    image: woodpeckerci/plugin-docker-buildx
+    pull: true
+    settings:
+      repo: *repo
+      platforms: linux/amd64
+      <<: *auth
+
+  - name: update
+    image: misotolar/woodpecker-docker-update
+    pull: true
+    settings:
+      repo: *repo
+      desc: *desc
+      readme: README.md
+      <<: *auth
