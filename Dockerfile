@@ -2,8 +2,8 @@ FROM php:8.4-fpm-alpine3.21
 
 LABEL maintainer="michal@sotolar.com"
 
-ENV FRESHRSS_VERSION=1.25.0
-ARG SHA256=01586fbbd1100d42205629ca3d5594193254b84b37fa4d0c7a97ced40e878a77
+ENV FRESHRSS_VERSION=1.26.0
+ARG SHA256=bf25b9019688cc2ed2fb2600cf628e7cd7fe08e9771836883035d7b7badaf09f
 ADD https://github.com/FreshRSS/FreshRSS/archive/refs/tags/$FRESHRSS_VERSION.tar.gz /usr/src/freshrss.tar.gz
 
 ENV PHP_MAX_EXECUTION_TIME 300
