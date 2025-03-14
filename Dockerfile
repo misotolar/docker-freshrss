@@ -1,9 +1,10 @@
 FROM php:8.4-fpm-alpine3.21
 
-LABEL maintainer="michal@sotolar.com"
+LABEL org.opencontainers.image.url="https://github.com/misotolar/docker-freshrss"
+LABEL org.opencontainers.image.authors="Michal Sotolar <michal@sotolar.com>"
 
-ENV FRESHRSS_VERSION=1.26.0
-ARG SHA256=bf25b9019688cc2ed2fb2600cf628e7cd7fe08e9771836883035d7b7badaf09f
+ENV FRESHRSS_VERSION=1.26.1
+ARG SHA256=6c42d1cbcf89d8cf97951a10e73f4984383e513c757b4ce0677cb60c25c235ac
 ADD https://github.com/FreshRSS/FreshRSS/archive/refs/tags/$FRESHRSS_VERSION.tar.gz /usr/src/freshrss.tar.gz
 
 ENV PHP_MAX_EXECUTION_TIME 300
