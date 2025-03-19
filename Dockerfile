@@ -7,6 +7,10 @@ ENV FRESHRSS_VERSION=1.26.1
 ARG SHA256=6c42d1cbcf89d8cf97951a10e73f4984383e513c757b4ce0677cb60c25c235ac
 ADD https://github.com/FreshRSS/FreshRSS/archive/refs/tags/$FRESHRSS_VERSION.tar.gz /usr/src/freshrss.tar.gz
 
+ENV FRESHRSS_EXTENSIONS_VERSION=0643af1ec5a23e0fbd6c23f2876f3099e763b23b
+ARG FRESHRSS_EXTENSIONS_SHA256=dc383a2df6248c3b2c2de47407f794f7bba72e27542d80db290ff3edea6f5419
+ADD https://github.com/FreshRSS/Extensions/archive/$FRESHRSS_EXTENSIONS_VERSION.tar.gz /usr/src/extensions.tar.gz
+
 ENV PHP_MAX_EXECUTION_TIME 300
 ENV PHP_MEMORY_LIMIT 32M
 ENV DATA_PATH /usr/local/freshrss/data
@@ -15,6 +19,7 @@ WORKDIR /usr/local/freshrss
 
 RUN set -ex; \
     apk add --no-cache \
+		bash \
         icu-data-full \
         rsync \
         tzdata \
@@ -69,7 +74,8 @@ RUN set -ex; \
         echo 'max_execution_time=${PHP_MAX_EXECUTION_TIME}'; \
         echo 'memory_limit=${PHP_MEMORY_LIMIT}'; \
     } > $PHP_INI_DIR/conf.d/freshrss-defaults.ini; \
-    echo "$SHA256 */usr/src/freshrss.tar.gz" | sha256sum -c -; \
+	echo "$SHA256 */usr/src/freshrss.tar.gz" | sha256sum -c -; \
+	echo "$FRESHRSS_EXTENSIONS_SHA256 */usr/src/extensions.tar.gz" | sha256sum -c -; \
     rm -rf \
         /usr/src/php.tar.xz \
         /usr/src/php.tar.xz.asc \

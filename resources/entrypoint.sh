@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -ex
 
@@ -8,9 +8,19 @@ if [ ! -d /usr/src/freshrss ]; then
 
 	cp -rf /usr/src/freshrss/data /usr/local/freshrss/html/data
 	cp -rf /usr/src/freshrss/extensions /usr/local/freshrss/html/extensions
+
+	if [ -n "$FRESHRSS_EXTENSIONS" ]; then
+		if [ ! -d /usr/src/extensions ]; then
+			mkdir -p /usr/src/extensions && tar -xf /usr/src/extensions.tar.gz -C /usr/src/extensions --strip-components=1 --wildcards --no-anchored "Extensions-${FRESHRSS_EXTENSIONS_VERSION}/xExtension-*"
+		fi
+
+		for extension in ${FRESHRSS_EXTENSIONS//,/}; do
+			cp -rf "/usr/src/extensions/xExtension-${extension}" "/usr/local/freshrss/html/lib/core-extensions/${extension}"
+		done
+	fi
 fi
 
-cd /usr/local/freshrss/html 
+cd /usr/local/freshrss/html
 
 ./cli/access-permissions.sh
 mkdir -p /usr/local/freshrss/data/users/_/
