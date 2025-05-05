@@ -32,12 +32,7 @@ steps:
       VERSION_TYPE: "docker_env"
       INCLUDE_SUFFIX: "no"
       INCLUDE_MAJOR: "no"
-
-  - name: normalize
-    image: bash
-    pull: true
-    commands:
-      - echo ",${CI_COMMIT_SHA:0:8},latest" >> .tags
+      CUSTOM_TAGS: "${CI_COMMIT_SHA:0:8},latest"
 
   - name: publish
     image: woodpeckerci/plugin-docker-buildx
