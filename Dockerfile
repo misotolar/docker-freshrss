@@ -1,15 +1,15 @@
-FROM php:8.4-fpm-alpine3.22
+FROM php:8.4-fpm-alpine3.23
 
 LABEL org.opencontainers.image.url="https://github.com/misotolar/docker-freshrss"
 LABEL org.opencontainers.image.description="FreshRSS Alpine Linux FPM image"
 LABEL org.opencontainers.image.authors="Michal Sotolar <michal@sotolar.com>"
 
-ENV FRESHRSS_VERSION=1.27.1
-ARG SHA256=99fd1d0e6f506832e6600c98e4c9369edad6bfec715df9b1b7c8c3eb6a455c22
+ENV FRESHRSS_VERSION=1.28.0
+ARG SHA256=2b2826c5b599dbd9031ee3b0329f8df41412d465a0da9dff077f95ce5e81f183
 ADD https://github.com/FreshRSS/FreshRSS/archive/refs/tags/$FRESHRSS_VERSION.tar.gz /usr/src/freshrss.tar.gz
 
-ENV FRESHRSS_EXTENSIONS_VERSION=2a7c33bf13e9d7a2561ab5548bcec0bc1f9501c7
-ARG FRESHRSS_EXTENSIONS_SHA256=09d4327065f064c72cc3bc71ea0eb3d9f7c4eff9462c7ef47bcb446b63930d81
+ENV FRESHRSS_EXTENSIONS_VERSION=42c32bfd9af2d816933cf310e24d25888a8e167d
+ARG FRESHRSS_EXTENSIONS_SHA256=83acdd151631996286ce2f37131c72c060d0545d4dd03b949ad9ec5f0f506542
 ADD https://github.com/FreshRSS/Extensions/archive/$FRESHRSS_EXTENSIONS_VERSION.tar.gz /usr/src/extensions.tar.gz
 
 ENV PHP_MAX_EXECUTION_TIME=300
