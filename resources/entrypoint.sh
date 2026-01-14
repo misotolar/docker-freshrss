@@ -65,4 +65,9 @@ mkdir -p /usr/local/freshrss/data/users/_/
 chown -R :www-data /usr/local/freshrss/data
 chmod -R g+w /usr/local/freshrss/data
 
+sed -i "s/\[www\]/\[$PHP_FPM_POOL\]/g" /usr/local/etc/php-fpm.d/docker.conf
+sed -i "s/\[www\]/\[$PHP_FPM_POOL\]/g" /usr/local/etc/php-fpm.d/www.conf
+
+envsubst < "/usr/local/etc/php-fpm.conf.docker" > "/usr/local/etc/php-fpm.d/zz-docker.conf"
+
 exec "$@"
