@@ -4,12 +4,12 @@ LABEL org.opencontainers.image.url="https://github.com/misotolar/docker-freshrss
 LABEL org.opencontainers.image.description="FreshRSS Alpine Linux FPM image"
 LABEL org.opencontainers.image.authors="Michal Sotolar <michal@sotolar.com>"
 
-ENV FRESHRSS_VERSION=1.28.1
-ARG SHA256=79bc4e408001aa3c40b1df58c66f9584bdb1459a0addabbbb79a5ff1ea65287c
+ENV FRESHRSS_VERSION=1.29.1
+ARG SHA256=b956aa4cd1f4d65eaad626a2648fecfdcbb7cdebf9253f3f4064965aefcd28cc
 ADD https://github.com/FreshRSS/FreshRSS/archive/refs/tags/$FRESHRSS_VERSION.tar.gz /usr/src/freshrss.tar.gz
 
-ENV FRESHRSS_EXTENSIONS_VERSION=3605f65b65e13ad818d4acbe337f7147feeb0970
-ARG FRESHRSS_EXTENSIONS_SHA256=063224e909392609b453e5fe11121ee78e7820956c2f045a846a166957e91428
+ENV FRESHRSS_EXTENSIONS_VERSION=3e5686139f2b708957543e6a6b159722af83d69b
+ARG FRESHRSS_EXTENSIONS_SHA256=457de22be60d2be7329b81eee8ea7958a8babada7b065e9880cebbfbf9453692
 ADD https://github.com/FreshRSS/Extensions/archive/$FRESHRSS_EXTENSIONS_VERSION.tar.gz /usr/src/extensions.tar.gz
 
 ENV TZ=UTC
